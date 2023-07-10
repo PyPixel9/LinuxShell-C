@@ -1,0 +1,224 @@
+
+
+-------------
+PTHREAD GUIDE
+-------------
+
+
+echo 
+1. prints single words 
+2. can print variables which aredefined using $
+-> excludes "____" , handles printing of variables using $x
+
+
+pwd 
+1. pwd &t: prints the COMPLETE location of the current working directory 
+2. pwd --help &t: prints the help page and availiable command of the pwd command 
+-> exception handled: 'pwd --' is same as pwd , gives error of too many arguments if too many arguments given 
+EXAMPLE: 
+| pwd         
+/Users/utkarsh/Desktop/TER/untitled folder
+| pwd --help
+pwd: pwd [-LP]
+	Print the name of the current working directory.
+
+	Options:
+	 -l  	print the value of $PWD if it names the current working
+			directory
+	 -P 	print the phystcal directory, without any symboltc links
+	
+	By default, "pwd' behaves as if '-L' were specified.
+
+	Exit Status:
+	Returns 0 unless an invalid option is given or the current directory cannot be read.
+| pwd &t
+/Users/utkarsh/Desktop/TER/untitled folder
+| pwd --help &t
+pwd: pwd [-LP]
+	Print the name of the current working directory.
+
+	Options:
+	 -l  	print the value of $PWD if it names the current working
+			directory
+	 -P 	print the phystcal directory, without any symboltc links
+	
+	By default, "pwd' behaves as if '-L' were specified.
+
+	Exit Status:
+	Returns 0 unless an invalid option is given or the current directory cannot be read.
+| pwd --
+/Users/utkarsh/Desktop/TER/untitled folder
+| pwd -- &t
+/Users/utkarsh/Desktop/TER/untitled folder
+| pwd eifj
+pwd: too many arguments
+| pwd ufh &t
+pwd: too many arguments
+
+
+
+
+
+ls
+1. ls -a &t : prints all files in the directory including the hidden files 
+2. ls &t : prints all the file names which are are present in the current directory 
+-> 'ls --' is treated the same as ls , if an invalid filename is written alongside ls tell the user that no such file/ directory exists eg: 'ls rufh &t' outputs 'ls: No such file or directory exists' warning
+
+
+
+
+date 
+1. date &t: outputs the local (IST) time
+2. date -u &t: outputs the UTC time
+-> date -uuuuu still works as date -u , wrong command with date eg: date -r gives incorrect arguments and prompts the user about what the right arguments are
+EXAMPLE
+| date
+| IST Tue Oct 25 14:48:32 2022
+date -u
+| UTC Tue Oct 25 09:18:36 2022
+date &t
+IST Tue Oct 25 14:48:46 2022
+| date -u &t
+UTC Tue Oct 25 09:18:58 2022
+| date -uuuu
+| UTC Tue Oct 25 09:19:20 2022
+date -uuuu &t
+UTC Tue Oct 25 09:19:25 2022
+| date -r
+date: illegal option
+usage: date [-jnRu] [-d dst] [-r seconds] [-t west] [-v[+|-]val[ymwdHMS]] ... 
+	[-f fmt date | [[[mm]dd]HH]MM[[cc]yy][.ss]] [+format]
+| date -r &t
+date: illegal option
+usage: date [-jnRu] [-d dst] [-r seconds] [-t west] [-v[+|-]val[ymwdHMS]] ... 
+	[-f fmt date | [[[mm]dd]HH]MM[[cc]yy][.ss]] [+format]
+
+
+
+
+rm 
+1. rm xyz &t: removes file with filename xyz
+2. rm -i xyz &t: removes file with file name xyz if the user says yes
+-> most corner cases related to rm are handled due to the implementation 
+
+
+
+mkdir 
+1. mkdir xyz &t : makes directory with the name xyz
+2. mkdir --help &t : prints help file for mkdir and outputs the various commands
+-> most of the corner cases are handled due to the implementation 
+
+
+
+cat 
+1. cat xyz &t : opens and prints the text of the file named xyz
+2. cat abc xyz &t : opens and prints the text of the files abc and xyz 
+-> if file xyz is not found in the directory gives the output 'cat: ejhf: No such file or directory' , if the file you try to open is a cat then it gives out the output 'cat: filename: Is a directory'
+
+
+
+cd 
+INCOMPLETE 
+
+
+
+
+--------------------------------------------------------------------------------
+
+-------------------
+FORK AND EXEC GUIDE
+-------------------
+
+
+1. Echo 
+FUNCTIONALITIES 
+printing out lines of code
+printing out variables and declaring variables CORNER CASES
+scanf only scans the first word but echo can scan entire line hence this corner case is handled
+if starting and ending with inverted quotes only the text in the middle of the 2 double quotes is printed 
+eg: 
+% echo utkarsh
+utkarsh
+% echo "utkarsh"
+utkarsh
+% x= 5
+echo the value of x is $x
+the value of x is 5
+% echo you need me i dont need you
+you need me i dont need you
+
+
+2. Date 
+FUNCTIONALITIES
+date : prints the current local time 
+date -u : prints the UTC time
+CORNER CASES HANDLED
+if the command date -uuuu... is given it still reads it as date -u ie: only the first character after - is read, this corner case is handled.
+if any unrecognized date command is called eg: date -r gives out an error 
+"usage: date [-jnRu] [-d dst] [-r seconds] [-t west] [-v[+|-]val[ymwdHMS]] ... 
+            [-f fmt date | [[[mm]dd]HH]MM[[cc]yy][.ss]] [+format]"
+this case is also covered
+eg:
+% date -uuu
+UTC Sun Oct 23 10:59:36 2022
+% date -u
+UTC Sun Oct 23 10:59:38 2022
+% date
+IST Sun Oct 23 16:29:32 2022
+% date -r
+date: illegal option
+usage: date [-jnRu] [-d dst] [-r seconds] [-t west] [-v[+|-]val[ymwdHMS]] ... 
+	[-f fmt date | [[[mm]dd]HH]MM[[cc]yy][.ss]] [+format]
+
+
+
+3. pwd
+FUNCTIONALITIES
+pwd : prints the 'COMPLETE' path of the current working directory 
+pwd --help : shows info about the various commands and flags of the pwd command 
+pwd -- : command is equivalent to normal pwd command
+CORNER CASES HANDLED
+"pwd --" command is treated equivalent to the normal "pwd" command this corner case is handled
+if the number of arguments are more than permitted then the pwd command points out the error by giving out "pwd: too many arguments" ie: the issue of too many arguments being given in pwd is sorted 
+
+
+
+4. rm 
+FUNCTIONALITIES
+rm xyz: deletes the file with the file name as  'xyz'
+rm -i xyz: gives a warning before deleting the file with the name as 'xyz'. asks for y n input from user before deleting (facing a lot of buffer issue, if doesnot work please terminate and restart the terminal) 
+NOTE: if problem still persists make a new makefile
+CORNER CASES HANDLED
++=++====-=-=-+++==_=_=_=_
+
+
+
+5. cat 
+FUNCTIONALITIES
+cat xyz  : opens and prints the text of the file named xyz
+cat abc xyz : opens and prints the text of the file named xyz and abc
+CORNER CASES HANDLES
+if file xyz is not found in the directory gives the output 'cat: ejhf: No such file or directory' 
+if the file you try to open is a cat then it gives out the output 'cat: filename: Is a directory'
+
+
+
+6. mkdir
+1. mkdir xyz  : makes directory with the name xyz
+2. mkdir --help  : prints help file for mkdir and outputs the various commands
+-> mkdir xyz ufh is same as mkdir 'xyz ufh' ie: spacebar exception in name handled , mkdir --help urfh is same as mkdir --help
+
+7. ls 
+1. ls 
+2. ls -a
+'ls --' is treated the same as ls
+
+
+
+8. cd
+1. cd directoryname : moves to directoryname 
+2. cd / : moves back to the directory we started from 
+-> incorrect command gives instructions about valid cd commands
+if non existant file opened gives out the warning 'cd: no such file or directory'
+
+
